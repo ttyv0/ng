@@ -1,0 +1,6 @@
+<div class="form-group">
+	<%= fields_for @comment do |comment_form| %>
+		<%= comment_form.label :message %><br>
+		<%= comment_form.text_area :message, class: 'form-control', rows: '10' %>
+	<% end %>
+  </div>

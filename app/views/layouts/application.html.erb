@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ng</title>
+  <title>NothingGood</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+<header>
+	<%= render 'layouts/nav' %>
+</header>
+<main role="main" class="container">
+	<%= yield %>
+</main>
 </body>
 </html>

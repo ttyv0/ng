@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p class="lead">
+  <%= @post.title %>
+</p>
+
+<ul class="media-list forum">
+	<% @post.comments.each do |comment| %>
+		<li class="media well">
+			<div class="pull-left user-info">
+				<%= image_tag('anon.png', class: 'avatar img-circle img-thumbnail img-responsive', width: '64') %>
+				<div class="text-center">
+					<strong>
+						<%= link_to comment.user.name, users_path(comment.user.name) %>
+					</strong>
+				</div>
+				<div class="text-center">
+					<small>Member</small>
+				</div>
+			</div>
+			<div class="media-body">
+				<div class="forum-post-panel btn-group btn-group-xs">
+					<a class="btn btn-default" href="#<%= render plain: comment.id %>">
+						<i class="fa fa-clock-o"></i> Posted <%= render plain: comment.created_at.strftime("%T %d-%m-%y") %>
+					</a>
+				</div>
+				<p><%= comment.message %></p>
+			</div>
+		</li>
+	<% end %>
+</ul>
+
+	<% if user_signed_in? && @post #TODO %>
+		<%= form_for @comment, url: post_comment_path(@post.id) do |comment_form| %>
+			<div class="form-group">
+				<%= comment_form.label :message %><br>
+				<%= comment_form.text_area :message, class: 'form-control', rows: '10' %>
+			</div>
+			<%= comment_form.submit 'Create comment', class: 'btn btn-primary' %>
+		<% end %>
+	<% end %>
