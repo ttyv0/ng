@@ -2,7 +2,15 @@ require 'test_helper'
 
 class PostsControllerTest < ActionController::TestCase
   setup do
-    @post = posts(:one)
+		sign_in User.find_by(name: 'user1')
+		@post = posts(:post_one)
+		@post_update = {
+			title: 'Test title post'
+		}
+		@comment_update = {
+			message: 'Test message'
+		}
+		@denied = 'Access denied!'
   end
 
   test "should get index" do
@@ -18,11 +26,40 @@ class PostsControllerTest < ActionController::TestCase
 
   test "should create post" do
     assert_difference('Post.count') do
-      post :create, post: { body: @post.body, title: @post.title, user_id: @post.user_id }
+			post :create, post: @post_update, comment: @comment_update
     end
 
     assert_redirected_to post_path(assigns(:post))
   end
+
+	test 'should create comment' do
+		assert_difference('Comment.count') do
+			post :create_comment, post_id: @post, comment: @comment_update 
+		end
+
+		assert_redirected_to post_path(@post.id)
+	end
+
+	test "not should create post" do
+		assert_no_difference('Post.count') do
+			sign_out User.find_by(name: 'user1')
+			post :create, post: @post_update, comment: @comment_update
+		end
+
+		assert_redirected_to posts_path
+		assert_equal @denied, flash[:notice]
+	end
+
+
+	test "not should create comment" do
+		assert_no_difference('Comment.count') do
+			sign_out User.find_by(name: 'user1')
+			post :create_comment, post_id: @post, comment: @comment_update
+		end
+
+		assert_redirected_to post_path(@post.id)
+		assert_equal @denied, flash[:notice]
+	end
 
   test "should show post" do
     get :show, id: @post
@@ -35,7 +72,7 @@ class PostsControllerTest < ActionController::TestCase
   end
 
   test "should update post" do
-    patch :update, id: @post, post: { body: @post.body, title: @post.title, user_id: @post.user_id }
+		patch :update, id: @post, post: @post_update, comment: @comment_update
     assert_redirected_to post_path(assigns(:post))
   end
 
@@ -45,5 +82,14 @@ class PostsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to posts_path
-  end
+	end
+
+	test "should route to article" do
+		assert_routing '/1', { controller: 'posts', action: 'show', id: '1' }
+	end
+
+	test "should route to new comment" do
+		assert_routing( { method: 'post', path: '/1/comment' }, { controller: 'posts', action: 'create_comment', post_id: '1' } )
+	end
+
 end

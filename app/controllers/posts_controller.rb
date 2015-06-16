@@ -30,15 +30,20 @@ class PostsController < ApplicationController
   end
 
 	def create
-		@post = current_user.posts.build(post_params)
-		@comment = current_user.comments.build(comment_params)
-		if @post.valid? && @comment.valid?
-			@post.save
-			@comment.post_id = @post.id
-			@comment.save
-			redirect_to @post, notice: 'Post was successfully created.'
+		if user_signed_in?
+			@post = current_user.posts.build(post_params)
+			@comment = current_user.comments.build(comment_params)
+			@comment.post_id = 0
+			if @post.valid? && @comment.valid?
+				@post.save
+				@comment.post_id = @post.id
+				@comment.save
+				redirect_to @post, notice: 'Post was successfully created.'
+			else
+				render :new
+			end
 		else
-			render :new
+			redirect_to posts_path, notice: 'Access denied!'
 		end
 	end
 
@@ -64,6 +69,8 @@ class PostsController < ApplicationController
 			@comment.post_id = params[:post_id]
 			@comment.save
 			redirect_to post_path(params[:post_id])
+		else
+			redirect_to post_path(params[:post_id]), notice: 'Access denied!'
 		end
 	end
 
