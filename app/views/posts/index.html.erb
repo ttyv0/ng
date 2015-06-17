@@ -31,7 +31,7 @@
 				<td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
 				<td><h4><%= link_to post.title, post %></h4></td>
 				<td class="hidden-xs hidden-sm">by <%= link_to post.user.name, users_path(post.user.name) %><br>
-					<small><i class="fa fa-clock-o"></i> <%= render plain: post.created_at.strftime("%T %d-%m-%y") %></small>
+					<small><i class="fa fa-clock-o"></i> <%= render plain: format_time(post.created_at) %></small>
 				</td>
 				<td class="text-center hidden-xs hidden-sm"><%= link_to post.comments.count, post %></td>
 				<td class="hidden-xs hidden-sm">by 
@@ -39,7 +39,7 @@
 					<%= link_to comment.user.name, users_path(comment.user.name) %><br>
 					<small>
 						<i class="fa fa-clock-o"></i>
-						<%= link_to comment.created_at.strftime("%T %d-%m-%y"), '#' %>
+						<%= link_to format_time(comment.created_at), post.id.to_s + '#comment' + comment.id.to_s %>
 					</small>
 					<% #= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
 				</td>

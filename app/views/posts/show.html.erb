@@ -6,7 +6,7 @@
 
 <ul class="media-list forum">
 	<% @post.comments.each do |comment| %>
-		<li class="media well">
+		<li class="media well" id="comment<%= render plain: comment.id %>">
 			<div class="pull-left user-info">
 				<%= image_tag('anon.png', class: 'avatar img-circle img-thumbnail img-responsive', width: '64') %>
 				<div class="text-center">
@@ -20,8 +20,8 @@
 			</div>
 			<div class="media-body">
 				<div class="forum-post-panel btn-group btn-group-xs">
-					<a class="btn btn-default" href="#<%= render plain: comment.id %>">
-						<i class="fa fa-clock-o"></i> Posted <%= render plain: comment.created_at.strftime("%T %d-%m-%y") %>
+					<a class="btn btn-default" href="#comment<%= render plain: comment.id %>">
+						<i class="fa fa-clock-o"></i> Posted <%= render plain: format_time(comment.created_at) %>
 					</a>
 				</div>
 				<p><%= comment.message %></p>
