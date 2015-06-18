@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class PostsControllerTest < ActionController::TestCase
+	include Devise::TestHelpers
   setup do
 		sign_in User.find_by(name: 'user1')
 		@post = posts(:post_one)
@@ -40,7 +41,7 @@ class PostsControllerTest < ActionController::TestCase
 		assert_redirected_to post_path(@post.id)
 	end
 
-	test "not should create post" do
+	test "should not create post" do
 		assert_no_difference('Post.count') do
 			sign_out User.find_by(name: 'user1')
 			post :create, post: @post_update, comment: @comment_update
@@ -51,7 +52,7 @@ class PostsControllerTest < ActionController::TestCase
 	end
 
 
-	test "not should create comment" do
+	test "should not create comment" do
 		assert_no_difference('Comment.count') do
 			sign_out User.find_by(name: 'user1')
 			post :create_comment, post_id: @post, comment: @comment_update
