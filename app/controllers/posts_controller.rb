@@ -14,18 +14,18 @@ class PostsController < ApplicationController
 			@post = current_user.posts.build
 			@comment = current_user.comments.build
 		else
-			redirect_to posts_url, notice: 'Access denied!'
+			redirect_to posts_url, alert: 'Access denied!'
 		end
   end
 
   def edit
 		if user_signed_in? 
 			if @post.user_id != current_user.id
-				redirect_to post_url, notice: 'Access denied!'
+				redirect_to post_url, alert: 'Access denied!'
 			end
 				@comment = @post.comments.first
 		else
-			redirect_to posts_url, notice: 'Access denied!'
+			redirect_to posts_url, alert: 'Access denied!'
 		end
   end
 
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 				render :new
 			end
 		else
-			redirect_to posts_path, notice: 'Access denied!'
+			redirect_to posts_path, alert: 'Access denied!'
 		end
 	end
 
@@ -70,7 +70,7 @@ class PostsController < ApplicationController
 			@comment.save
 			redirect_to post_path(params[:post_id])
 		else
-			redirect_to post_path(params[:post_id]), notice: 'Access denied!'
+			redirect_to post_path(params[:post_id]), alert: 'Access denied!'
 		end
 	end
 

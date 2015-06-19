@@ -1,6 +1,5 @@
 <div class="page-header page-heading">
 	<h1 class="pull-left">Forum</h1>
-	<div id="notice" class="pull-right"><%= notice %></div>
 	<div class="clearfix"></div>
 </div>
 
@@ -33,7 +32,7 @@
 				<td class="hidden-xs hidden-sm">by <%= link_to post.user.name, users_path(post.user.name) %><br>
 					<small><i class="fa fa-clock-o"></i> <%= render plain: format_time(post.created_at) %></small>
 				</td>
-				<td class="text-center hidden-xs hidden-sm"><%= link_to post.comments.count, post %></td>
+				<td class="text-center hidden-xs hidden-sm"><%= link_to post.comments.count - 1, post %></td>
 				<td class="hidden-xs hidden-sm">by 
 					<% comment = post.comments.last %>
 					<%= link_to comment.user.name, users_path(comment.user.name) %><br>
