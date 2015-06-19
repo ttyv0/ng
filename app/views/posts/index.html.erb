@@ -7,27 +7,27 @@
 <div class="row">
 	<p><%= link_to 'New Post', new_post_path, class: 'btn btn-primary' %></p>
 </div>
-
-<table class="table table-striped">
-  <thead>
-		<tr>
-			<th></th>
-      <th>Title</th>
-			<th>Author</th>
-			<th>Comments</th>
-			<th>Last comment</th>
-    </tr>
-  </thead>
-	<colgroup>
-    <col span="1" style="width: 5%;">
-    <col span="1" style="width: 60%;">
-    <col span="1" style="width: 15%;">
-    <col span="1" style="width: 5%;">
-    <col span="1" style="width: 15%;">
-	</colgroup>
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
+<% if Post.count > 0 %>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Comments</th>
+				<th>Last comment</th>
+			</tr>
+		</thead>
+		<colgroup>
+			<col span="1" style="width: 5%;">
+			<col span="1" style="width: 60%;">
+			<col span="1" style="width: 15%;">
+			<col span="1" style="width: 5%;">
+			<col span="1" style="width: 15%;">
+		</colgroup>
+		<tbody>
+		<% @posts.each do |post| %>
+			<tr>
 				<td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
 				<td><h4><%= link_to post.title, post %></h4></td>
 				<td class="hidden-xs hidden-sm">by <%= link_to post.user.name, users_path(post.user.name) %><br>
@@ -45,8 +45,9 @@
 				</td>
 			</tr>
 		<% end %>
-  </tbody>
-</table>
+		</tbody>
+	</table>
+<% end %>
 
 <br>
 
