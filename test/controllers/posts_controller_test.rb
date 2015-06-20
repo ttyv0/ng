@@ -48,7 +48,7 @@ class PostsControllerTest < ActionController::TestCase
 		end
 
 		assert_redirected_to posts_path
-		assert_equal @denied, flash[:notice]
+		assert_equal @denied, flash[:alert]
 	end
 
 
@@ -59,7 +59,7 @@ class PostsControllerTest < ActionController::TestCase
 		end
 
 		assert_redirected_to post_path(@post.id)
-		assert_equal @denied, flash[:notice]
+		assert_equal @denied, flash[:alert]
 	end
 
   test "should show post" do
