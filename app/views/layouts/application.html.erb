@@ -8,12 +8,12 @@
 </head>
 <body>
 <header>
-	<%= render 'layouts/nav' %>
+    <%= render 'layouts/nav' %>
 </header>
-	<% if notice %><div role="alert" class="alert alert-success pull-right"><%= notice %></div><% end %>
-	<% if alert %><div role="alert" class="alert alert-danger pull-right"><%= alert %></div><% end %>
+    <% if notice %><div role="alert" class="alert alert-success pull-right"><%= notice %></div><% end %>
+    <% if alert %><div role="alert" class="alert alert-danger pull-right"><%= alert %></div><% end %>
 <main role="main" class="container">
-	<%= yield %>
+    <%= yield %>
 </main>
 </body>
 </html>
