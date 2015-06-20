@@ -6,54 +6,55 @@ class PostsController < ApplicationController
   end
 
   def show
-		@comment = Comment.new
+    @comment = Comment.new
+    @comments = @post.comments.page(params[:page])
   end
 
   def new
-		if user_signed_in? 
-			@post = current_user.posts.build
-			@comment = current_user.comments.build
-		else
-			redirect_to posts_url, alert: 'Access denied!'
-		end
+    if user_signed_in?
+      @post = current_user.posts.build
+      @comment = current_user.comments.build
+    else
+      redirect_to posts_url, alert: 'Access denied!'
+    end
   end
 
   def edit
-		if user_signed_in? 
-			if @post.user_id != current_user.id
-				redirect_to post_url, alert: 'Access denied!'
-			end
-				@comment = @post.comments.first
-		else
-			redirect_to posts_url, alert: 'Access denied!'
-		end
+    if user_signed_in?
+      if @post.user_id != current_user.id
+        redirect_to post_url, alert: 'Access denied!'
+      end
+        @comment = @post.comments.first
+    else
+      redirect_to posts_url, alert: 'Access denied!'
+    end
   end
 
-	def create
-		if user_signed_in?
-			@post = current_user.posts.build(post_params)
-			@comment = current_user.comments.build(comment_params)
-			@comment.post_id = 0
-			if @post.valid? && @comment.valid?
-				@post.save
-				@comment.post_id = @post.id
-				@comment.save
-				redirect_to @post, notice: 'Post was successfully created.'
-			else
-				render :new
-			end
-		else
-			redirect_to posts_path, alert: 'Access denied!'
-		end
-	end
+  def create
+    if user_signed_in?
+      @post = current_user.posts.build(post_params)
+      @comment = current_user.comments.build(comment_params)
+      @comment.post_id = 0
+      if @post.valid? && @comment.valid?
+        @post.save
+        @comment.post_id = @post.id
+        @comment.save
+        redirect_to @post, notice: 'Post was successfully created.'
+      else
+        render :new
+      end
+    else
+      redirect_to posts_path, alert: 'Access denied!'
+    end
+  end
 
-	def update
-		if @post.update(post_params) && @post.comments.first.update(comment_params)
-			redirect_to @post, notice: 'Post was successfully updated.'
-		else
-			render :edit
-		end
-	end
+  def update
+    if @post.update(post_params) && @post.comments.first.update(comment_params)
+      redirect_to @post, notice: 'Post was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   def destroy
     @post.destroy
@@ -63,16 +64,16 @@ class PostsController < ApplicationController
     end
   end
 
-	def create_comment
-		if user_signed_in?
-			@comment = current_user.comments.build(comment_params)
-			@comment.post_id = params[:post_id]
-			@comment.save
-			redirect_to post_path(params[:post_id])
-		else
-			redirect_to post_path(params[:post_id]), alert: 'Access denied!'
-		end
-	end
+  def create_comment
+    if user_signed_in?
+      @comment = current_user.comments.build(comment_params)
+      @comment.post_id = params[:post_id]
+      @comment.save
+      redirect_to post_path(params[:post_id])
+    else
+      redirect_to post_path(params[:post_id]), alert: 'Access denied!'
+    end
+  end
 
   private
     def set_post
@@ -81,10 +82,10 @@ class PostsController < ApplicationController
 
     def post_params
       params.require(:post).permit(:title)
-		end
+    end
 
-		def comment_params
-			params.require(:comment).permit(:message)
-		end
+    def comment_params
+      params.require(:comment).permit(:message)
+    end
 
 end
