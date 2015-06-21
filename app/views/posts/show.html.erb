@@ -19,7 +19,7 @@
       <div class="media-body">
         <div class="forum-post-panel btn-group btn-group-xs">
           <a class="btn btn-default" href="#comment<%= render plain: comment.id %>">
-            <i class="fa fa-clock-o"></i> Posted <%= render plain: format_time(comment.created_at) %>
+            <span class="glyphicon glyphicon-time"></span> Posted <%= render plain: format_time(comment.created_at) %>
           </a>
         </div>
         <p><%= comment.message %></p>
