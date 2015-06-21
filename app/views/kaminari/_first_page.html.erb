@@ -1,0 +1,11 @@
+<% if current_page.first? %>
+  <li class="disabled">
+    <span>
+      <%= render plain: t('views.pagination.first').html_safe %>
+    </span>
+  </li>
+<% else %>
+  <li>
+    <%= link_to t('views.pagination.first').html_safe, url %>
+  </li>
+<% end %>

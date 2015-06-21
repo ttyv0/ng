@@ -1,0 +1,11 @@
+<% if page.current? %>
+  <li class="active">
+    <span>
+      <%= render plain: page %>
+    </span>
+  </li>
+<% else %>
+  <li>
+    <%= link_to page, url %> 
+  </li>
+<% end %>
