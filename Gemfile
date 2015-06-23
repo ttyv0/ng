@@ -10,10 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'therubyracer'
-#gem 'duktape'
-
 gem 'bootstrap-sass'
-gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
 gem 'devise'
 gem 'kaminari'

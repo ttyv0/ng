@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_icons, only: [:index, :new, :create, :edit, :update]
 
   def index
     @posts = Post.all
@@ -33,6 +34,7 @@ class PostsController < ApplicationController
   def create
     if user_signed_in?
       @post = current_user.posts.build(post_params)
+      @post.icon = @icons.first unless @icons.include? @post.icon
       @comment = current_user.comments.build(comment_params)
       @comment.post_id = 0
       if @post.valid? && @comment.valid?
@@ -81,11 +83,14 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title)
+      params.require(:post).permit(:title, :icon)
     end
 
     def comment_params
       params.require(:comment).permit(:message)
     end
 
+    def set_icons
+      @icons = %w{ info-sign question-sign film trash lock star-empty headphones globe gift heart-empty education flash magnet }
+    end
 end
