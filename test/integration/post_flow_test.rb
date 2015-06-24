@@ -28,9 +28,8 @@ class PostFlowTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_template "posts/index"
-    assert_select "ul.dropdown-menu" do
-      assert_select "li", "Sign in"
-      assert_select "li", "Sign up"
+    assert_select "li.active" do
+      assert_select "a", "Anonimous"
     end
 
     get "/users/sign_in"
@@ -49,7 +48,7 @@ class PostFlowTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_template "posts/index"
-    assert_select "li.dropdown" do
+    assert_select "li.active" do
       assert_select "a", "user_integr"
     end
 
