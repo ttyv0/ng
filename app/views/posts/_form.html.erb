@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :marker %><br>
+    <%= f.label :icon %><br>
     <div class="radio">
       <% @icons.each do |i| %>
         <label class="radio-inline">
@@ -26,9 +26,10 @@
   <div class="form-group">
     <%= f.label :title %><br>
     <%= f.text_field :title, class: 'form-control' %>
-    </div>
+  </div>
     <%= render 'comment_form' %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary', data: { disable_with: 'Creating...' } %>
+    <%= link_to 'Back', posts_path, class: 'btn btn-primary' %>
   </div>
 <% end %>
